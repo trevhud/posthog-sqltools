@@ -1,6 +1,7 @@
 {
   "name": "posthog-query-runner",
   "displayName": "PostHog Query Runner",
+  "publisher": "trevhud",
   "description": "Run queries against your PostHog project with command+enter",
   "version": "0.1.0",
   "engines": {
@@ -10,7 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:sql"
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -42,7 +43,19 @@
           "description": "PostHog Project ID (leave empty to use the project ID from .env file)"
         }
       }
-    }
+    },
+    "sqltools.drivers": [
+      {
+        "name": "PostHog (HogQL API)",
+        "displayName": "PostHog (HogQL API)",
+        "id": "posthog-api-driver",
+        "adapter": "extension",
+        "extensionId": "trevhud.posthog-query-runner",
+        "icon": "icons/posthog-default.png",
+        "iconActive": "icons/posthog-active.png",
+        "iconInactive": "icons/posthog-inactive.png"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -53,6 +66,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "@sqltools/types": "^0.2.0",
     "@types/node": "^22.15.17",
     "@types/vscode": "^1.84.0",
     "eslint": "^9.26.0",
@@ -63,5 +77,8 @@
   "dependencies": {
     "axios": "^1.9.0",
     "dotenv": "^16.5.0"
-  }
+  },
+  "extensionDependencies": [
+    "mtxr.sqltools"
+  ]
 }

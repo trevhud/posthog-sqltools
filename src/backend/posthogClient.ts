@@ -28,10 +28,15 @@ export interface PostHogQueryResponse {
 export class PostHogClient {
   private apiKey: string;
   private projectId: string;
-  private baseUrl: string = "https://us.posthog.com/api"; // User's instance
+  private baseUrl: string; // Will be set in constructor
   private httpClient: AxiosInstance;
 
-  constructor(apiKey?: string, projectId?: string, userWorkspaceRoot?: string) {
+  constructor(
+    apiKey?: string,
+    projectId?: string,
+    userWorkspaceRoot?: string,
+    customApiUrl?: string
+  ) {
     // Load .env file from user's workspace if provided
     if (userWorkspaceRoot) {
       const envPath = path.join(userWorkspaceRoot, ".env");
@@ -98,8 +103,22 @@ export class PostHogClient {
       );
     }
 
+    // Set base URL
+    let apiDomain = "https://us.posthog.com"; // Default domain
+    if (customApiUrl) {
+      // Remove trailing slash if any, to consistently add /api later
+      apiDomain = customApiUrl.replace(/\/$/, "");
+    }
+    // Ensure the final baseUrl includes /api
+    if (apiDomain.endsWith("/api")) {
+      this.baseUrl = apiDomain;
+    } else {
+      this.baseUrl = `${apiDomain}/api`;
+    }
+    console.log(`Using API base URL: ${this.baseUrl}`, "PostHogClient");
+
     this.httpClient = axios.create({
-      baseURL: this.baseUrl,
+      baseURL: this.baseUrl, // Now uses the dynamically set baseUrl
       headers: {
         Authorization: `Bearer ${this.apiKey}`,
         "Content-Type": "application/json",

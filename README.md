@@ -6,17 +6,19 @@ A VSCode extension that allows you to run ClickHouse SQL queries against your Po
 
 - Store your ClickHouse queries as SQL files.
 - Run queries with Command+Enter (or your configured shortcut).
-- View results in a nicely formatted panel.
-- Secure API key storage via `.env` file or VSCode settings.
+- View results in a nicely formatted panel (standalone mode) or via SQLTools UI.
+- Secure API key storage via `.env` file or VSCode settings (for standalone mode) or SQLTools connection settings.
 - Entirely written in TypeScript, no Python dependency for the extension itself.
+- **SQLTools Integration**: Provides a driver to connect to PostHog as a data source within the SQLTools extension.
 
 ## Setup
 
 ### Prerequisites
 
 - **Node.js**: LTS version (e.g., 18.x or 20.x) recommended, which includes npm.
-- **VSCode**: Version `^1.60.0` or higher.
+- **VSCode**: Version `^1.60.0` or higher (this extension's `engines.vscode` is `^1.84.0`).
 - **PostHog API Key & Project ID**: Required to connect to your PostHog instance.
+- **SQLTools Extension (Optional, for driver usage)**: If you want to use the SQLTools integration, install the `vscode-sqltools` extension (ID: `mtxr.sqltools`) from the VSCode Marketplace.
 
 ### Installation & Configuration
 
@@ -69,12 +71,41 @@ A VSCode extension that allows you to run ClickHouse SQL queries against your Po
 3.  Click on the "..." menu in the Extensions view.
 4.  Select "Install from VSIX..." and choose the generated `.vsix` file.
 
-## Usage
+## Usage Options
+
+This extension offers two ways to run queries against PostHog:
+
+### 1. Standalone Command (Original Functionality)
 
 1.  Create SQL query files (e.g., in the `queries/` directory or anywhere within your workspace) with a `.sql` extension.
+    _Ensure API Key and Project ID are configured via `.env` or VSCode settings for this mode (see "Installation & Configuration" section 3)._
 2.  Open a query file in VSCode.
 3.  Press `Cmd+Enter` (Mac) or `Ctrl+Enter` (Windows/Linux) to execute the query.
-4.  View the results in the panel that appears.
+4.  View the results in a new panel that appears, formatted by this extension.
+
+### 2. Using the SQLTools Driver
+
+This method allows you to use the powerful features of the [SQLTools extension](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools).
+
+1.  **Prerequisites**:
+    - Ensure this "PostHog Query Runner" extension is installed and enabled.
+    - Ensure the "SQLTools" extension (ID: `mtxr.sqltools`) is installed and enabled.
+2.  **Add a New Connection in SQLTools**:
+    - Open the SQLTools view in the VSCode sidebar.
+    - Hover over the "Connections" section and click the "Add New Connection" icon.
+    - Select **"PostHog (HogQL API)"** from the list of available drivers.
+    - Fill in the connection form:
+      - **Connection Name**: A descriptive name for your connection (e.g., "My PostHog Project").
+      - **PostHog API URL**: The base URL for your PostHog instance (defaults to `https://us.posthog.com`, can be changed to `https://app.posthog.com` for EU cloud or your self-hosted instance URL).
+      - **PostHog Project ID**: Your PostHog Project ID.
+      - **PostHog API Key**: Your PostHog Personal API Key.
+    - Click "Save Connection".
+3.  **Connect and Query**:
+    - In the SQLTools sidebar, find your newly created connection and click the "Connect" icon.
+    - Once connected, you can:
+      - Open a `.sql` file and run queries using SQLTools' "Run on active connection" command.
+      - Use the "New SQLTools Query" command to open a dedicated SQLTools query editor.
+    - View results, history, and bookmarks within the SQLTools interface.
 
 ## Example Queries
 
@@ -116,11 +147,15 @@ The project is now structured as a TypeScript VSCode extension:
 ├── package.json              # Extension metadata, scripts, & dependencies
 ├── tsconfig.json             # TypeScript compiler configuration
 ├── src/                      # TypeScript source files
-│   ├── extension.ts          # Main extension activation logic
-│   └── backend/              # TypeScript backend modules
-│       ├── posthogClient.ts    # Handles PostHog API communication
-│       ├── queryExecutor.ts    # Core query execution logic
-│       └── resultFormatter.ts  # Formats results to HTML
+│   ├── extension.ts          # Main extension activation logic (standalone command & SQLTools driver registration)
+│   ├── backend/              # Core backend logic (PostHog client, query execution, HTML formatting)
+│   │   ├── posthogClient.ts
+│   │   ├── queryExecutor.ts
+│   │   └── resultFormatter.ts
+│   └── sqltools-driver/      # SQLTools driver specific logic
+│       ├── driver.ts           # Implements SQLTools IConnectionDriver interface
+│       ├── constants.ts        # Driver constants (ID, name)
+│       └── connection.schema.json # Defines connection form for SQLTools UI
 ├── out/                      # Compiled JavaScript (generated, gitignored)
 ├── node_modules/             # Project dependencies (gitignored)
 └── queries/                  # Example directory for SQL queries

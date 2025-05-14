@@ -4,11 +4,16 @@ import * as path from "path";
 // import * as fs from "fs"; // No longer directly used in this file
 import { QueryExecutor } from "./backend/queryExecutor";
 import { PostHogQueryResponse } from "./backend/posthogClient";
+import PostHogSqlToolsDriver from "./sqltools-driver/driver"; // Default export
+import { DRIVER_ALIASES } from "./sqltools-driver/constants";
 
 /**
  * @param {vscode.ExtensionContext} context
  */
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): {
+  driverAliases: typeof DRIVER_ALIASES;
+  driverInstance: PostHogSqlToolsDriver;
+} {
   console.log("PostHog ClickHouse Query Runner is now active");
 
   // Register the command to run a query
@@ -137,6 +142,12 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disposable);
+
+  // Return the API for SQLTools
+  return {
+    driverAliases: DRIVER_ALIASES,
+    driverInstance: new PostHogSqlToolsDriver(), // Provide an instance
+  };
 }
 
 export function deactivate() {}

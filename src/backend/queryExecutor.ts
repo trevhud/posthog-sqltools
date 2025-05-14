@@ -11,9 +11,19 @@ export class QueryExecutor {
   private client: PostHogClient;
   private userWorkspaceRoot?: string;
 
-  constructor(apiKey?: string, projectId?: string, userWorkspaceRoot?: string) {
+  constructor(
+    apiKey?: string,
+    projectId?: string,
+    userWorkspaceRoot?: string,
+    customApiUrl?: string
+  ) {
     this.userWorkspaceRoot = userWorkspaceRoot;
-    this.client = new PostHogClient(apiKey, projectId, userWorkspaceRoot);
+    this.client = new PostHogClient(
+      apiKey,
+      projectId,
+      userWorkspaceRoot,
+      customApiUrl
+    );
   }
 
   public async executeQueryFromFile(

@@ -1,0 +1,39 @@
+{
+  "title": "PostHog API Connection",
+  "type": "object",
+  "required": [
+    "posthogApiKey",
+    "posthogProjectId"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Connection Name",
+      "description": "A unique name for this connection (e.g., My PostHog Project)"
+    },
+    "driver": {
+      "type": "string",
+      "title": "Driver",
+      "default": "PostHog (HogQL API)",
+      "enum": [
+        "PostHog (HogQL API)"
+      ]
+    },
+    "posthogApiUrl": {
+      "type": "string",
+      "title": "PostHog API URL",
+      "description": "Your PostHog instance API base URL (e.g., https://app.posthog.com or https://us.posthog.com)",
+      "default": "https://us.posthog.com"
+    },
+    "posthogProjectId": {
+      "type": "string",
+      "title": "PostHog Project ID",
+      "description": "Your PostHog Project ID"
+    },
+    "posthogApiKey": {
+      "type": "string",
+      "title": "PostHog API Key",
+      "description": "Your PostHog Personal API Key"
+    }
+  }
+}
