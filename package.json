@@ -3,7 +3,11 @@
   "displayName": "PostHog SQLTools",
   "publisher": "trevhud",
   "license": "MIT",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trevhud/posthog-sqltools"
+  },
+  "icon": "icons/posthog.png",
   "description": "Run queries against your PostHog project with SQLTools",
   "version": "0.1.0",
   "engines": {
