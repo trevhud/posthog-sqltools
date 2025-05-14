@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2020",
-    "outDir": "out",
-    "rootDir": "src",
-    "strict": true,
-    "lib": ["es2020"],
-    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "lib": ["es6"],
+    "module": "commonjs",
+    "noEmit": false,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "declaration": false,
+    "target": "esnext",
+		"outDir": "out"
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    ".vscode-test"
+    "node_modules"
   ]
 }

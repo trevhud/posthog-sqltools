@@ -1,7 +1,6 @@
 .env
 .vscode/
 *.vsix
-# extension/backend/ # Obsolete
 .venv/
 node_modules/
 out/

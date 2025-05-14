@@ -14,9 +14,9 @@
     "driver": {
       "type": "string",
       "title": "Driver",
-      "default": "PostHog (HogQL API)",
+      "default": "posthog-api-driver",
       "enum": [
-        "PostHog (HogQL API)"
+        "posthog-api-driver"
       ]
     },
     "posthogApiUrl": {

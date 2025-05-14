@@ -1,6 +1,6 @@
-# PostHog ClickHouse Query Runner (TypeScript Version)
+# PostHog Query Runner
 
-A VSCode extension that allows you to run ClickHouse SQL queries against your PostHog database with a simple keyboard shortcut (Command+Enter). This version is written in TypeScript.
+A VSCode extension that allows you to run ClickHouse SQL queries against your PostHog database with a simple keyboard shortcut (Command+Enter).
 
 ## Features
 
@@ -8,7 +8,6 @@ A VSCode extension that allows you to run ClickHouse SQL queries against your Po
 - Run queries with Command+Enter (or your configured shortcut).
 - View results in a nicely formatted panel (standalone mode) or via SQLTools UI.
 - Secure API key storage via `.env` file or VSCode settings (for standalone mode) or SQLTools connection settings.
-- Entirely written in TypeScript, no Python dependency for the extension itself.
 - **SQLTools Integration**: Provides a driver to connect to PostHog as a data source within the SQLTools extension.
 
 ## Setup
@@ -66,7 +65,7 @@ A VSCode extension that allows you to run ClickHouse SQL queries against your Po
     ```bash
     npm run package
     ```
-    This will create a `.vsix` file (e.g., `posthog-clickhouse-query-runner-0.1.0.vsix`) in the project root.
+    This will create a `.vsix` file (e.g., `posthog-sqltools-0.1.0.vsix`) in the project root.
 2.  In VSCode, navigate to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X).
 3.  Click on the "..." menu in the Extensions view.
 4.  Select "Install from VSIX..." and choose the generated `.vsix` file.
