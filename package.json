@@ -1,0 +1,67 @@
+{
+  "name": "posthog-query-runner",
+  "displayName": "PostHog Query Runner",
+  "description": "Run queries against your PostHog project with command+enter",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:sql"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "posthog-clickhouse-query-runner.runQuery",
+        "title": "Run PostHog ClickHouse Query"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "posthog-clickhouse-query-runner.runQuery",
+        "key": "cmd+enter",
+        "mac": "cmd+enter",
+        "when": "editorTextFocus && editorLangId == 'sql'"
+      }
+    ],
+    "configuration": {
+      "title": "PostHog ClickHouse Query Runner",
+      "properties": {
+        "posthogClickhouseQueryRunner.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "PostHog API Key (leave empty to use the key from .env file)"
+        },
+        "posthogClickhouseQueryRunner.projectId": {
+          "type": "string",
+          "default": "",
+          "description": "PostHog Project ID (leave empty to use the project ID from .env file)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext .ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@types/node": "^22.15.17",
+    "@types/vscode": "^1.84.0",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "typescript": "^5.8.3",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0"
+  }
+}

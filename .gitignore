@@ -1,8 +1,7 @@
 .env
-__pycache__/
-*.py[cod]
-*$py.class
 .vscode/
-extension/*.vsix
-extension/backend/
+*.vsix
+# extension/backend/ # Obsolete
 .venv/
+node_modules/
+out/
